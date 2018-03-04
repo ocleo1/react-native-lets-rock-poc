@@ -19,7 +19,7 @@ import {
 
 export default class ActiveScreen extends React.Component {
   static navigationOptions = {
-    title: 'Grow Together',
+    title: 'Get Active',
     headerStyle: {
       backgroundColor: '#F5FCFF'
     },
@@ -30,7 +30,7 @@ export default class ActiveScreen extends React.Component {
 
     this._ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     this.state = {
-      dataSource: ds.cloneWithRows([])
+      dataSource: this._ds.cloneWithRows([])
     }
   }
 
@@ -38,15 +38,17 @@ export default class ActiveScreen extends React.Component {
     const requestURL = 'https://plgaia-staging.herokuapp.com/api/v1/post_get_active/4Wa0y74X1mAKKIo2qgiWii';
   
     return fetch(requestURL, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        'authorization': 'Token ZVKgYbjoOxoM9fvuhDvQOAtt'
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          authorization: 'Token ZVKgYbjoOxoM9fvuhDvQOAtt'
+        }
       })
+      .then((response) => response.json())
       .then((responseJson) => {
         const results = responseJson['get_active'];
         this.setState({
-          dataSource: this._ds.cloneWithRows(results),
+          dataSource: this._ds.cloneWithRows(results)
         });
       })
       .catch((error) =>{
@@ -57,32 +59,50 @@ export default class ActiveScreen extends React.Component {
   _renderRow(rowData) {
     return (
       <View style={{
-        flex: 1,
         justifyContent: 'center',
-        alignItems: 'center',
-        paddingHorizontal: 10
+        paddingHorizontal: 20,
+        backgroundColor: 'white'
       }}>
-        <Image
-          style={{width: imageWidth, height: imageHeight}}
-          source={rowData.image.url}
-        />
-        <Text>{rowData.name}</Text>
+        <View style={{marginTop: 30, alignItems: 'center'}}>
+          <Image
+            style={{width: 100, height: 100}}
+            source={{uri: `http:${rowData.image.url}`}}
+          />
+        </View>
+        <View style={{marginTop: 10, alignItems: 'center'}}>
+          <Text style={{textAlign: 'center', fontSize: 16, fontWeight: 'bold'}}>{rowData.name}</Text>
+        </View>
         {
           !!rowData.instruction ?
-            <Text>{rowData.instruction}</Text> :
+            <View style={{marginTop: 10}}>
+              <Text>{rowData.instruction}</Text>
+            </View> :
             null
         }
+        <View style={{marginTop: 10}}>
         {
-          rowData.steps.length() !== 0 ?
+          rowData.steps.length !== 0 ?
             rowData.steps.map((step, index) => {
               return (
-                <View key={`${rowData.name}-step-index`}>
-                  <Text>{`STEP ${index}`}</Text>
-                  <Text>{step}</Text>
+                <View
+                  style={{
+                    flex: 1,
+                    justifyContent: 'center',
+                    alignItems: 'center'
+                  }}
+                  key={`${rowData.name}-step-${index}`}>
+                  <View style={{marginTop: 10}}>
+                    <Text style={{fontSize: 10, color: '#adf5ff'}}>{`STEP ${index}`}</Text>
+                  </View>
+                  <View style={{marginTop: 10}}>
+                    <Text>{step}</Text>
+                  </View>
                 </View>
               );
-            })
+            }) :
+            null
         }
+        </View>
       </View>
     );
   }
@@ -91,6 +111,7 @@ export default class ActiveScreen extends React.Component {
     return (
       <View style={styles.container}>
         <ListView
+          enableEmptySections={true}
           dataSource={this.state.dataSource}
           renderRow={this._renderRow.bind(this)}
         />
