@@ -17,6 +17,7 @@ import {
   AsyncStorage
 } from 'react-native';
 
+import AudioPlayer from 'AudioPlayer';
 import { getData } from 'Network';
 
 const STORE_KEY = '@MyData:key';
@@ -131,6 +132,9 @@ export default class ActiveScreen extends React.Component {
           dataSource={this.state.dataSource}
           renderRow={this._renderRow.bind(this)}
         />
+        <View style={styles.audioPlayer}>
+          <AudioPlayer />
+        </View>
       </View>
     );
   }
@@ -140,5 +144,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#F5FCFF',
+  },
+  audioPlayer: {
+    width: 70,
+    height: 50,
+    position: 'absolute',
+    bottom: 70
   }
 });
