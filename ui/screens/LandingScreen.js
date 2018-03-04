@@ -64,6 +64,12 @@ export default class LandingScreen extends React.Component {
               </Text>
             </View>
           </TouchableOpacity>
+          <View style={{paddingHorizontal: 10}}>
+            <Text>
+              By continuing, you agree to our
+              <Text style={{fontSize: 10, fontWeight: 'bold'}}> Terms of Use & Privacy Policy</Text>
+            </Text>
+          </View>
         </View>
       </View>
     );
