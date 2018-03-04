@@ -11,7 +11,8 @@ import {
   StyleSheet,
   Image,
   Text,
-  View
+  View,
+  TouchableOpacity
 } from 'react-native';
 
 
@@ -40,6 +41,10 @@ export default class LandingScreen extends React.Component {
     })
   }
 
+  _onPressButton() {
+    // Navigation
+  }
+
   render() {
     const { imageWidth, imageHeight } = this.state;
 
@@ -51,7 +56,15 @@ export default class LandingScreen extends React.Component {
             source={require('../images/biking.png')}
           />
         </View>
-        <View style={{flex: .4, backgroundColor: '#64e1ef'}} />
+        <View style={{flex: .4, backgroundColor: '#c6f9ff', alignItems: 'center', justifyContent: 'center'}}>
+          <TouchableOpacity onPress={this._onPressButton.bind(this)}>
+            <View style={styles.button}>
+              <Text style={styles.buttonText}>
+                Get Started
+              </Text>
+            </View>
+          </TouchableOpacity>
+        </View>
       </View>
     );
   }
@@ -61,5 +74,21 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#F5FCFF',
+  },
+  button: {
+    width: 200,
+    height: 30,
+    backgroundColor: '#2dd2e5',
+    borderColor: '#2dd2e5',
+    borderRadius: 10,
+    borderWidth: 1,
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  buttonText: {
+    width: 180,
+    textAlign: 'center',
+    color: 'white',
+    fontWeight: 'bold'
   }
 });
