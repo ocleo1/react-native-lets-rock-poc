@@ -1,0 +1,3 @@
+rootProject.name = 'LetsRock'
+
+include ':app'

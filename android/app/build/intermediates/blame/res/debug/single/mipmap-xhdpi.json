@@ -1,0 +1,10 @@
+[
+    {
+        "merged": "/Users/Chris/Projects/AwesomeProject/android/app/build/intermediates/res/merged/debug/mipmap-xhdpi/ic_launcher.png",
+        "source": "/Users/Chris/Projects/AwesomeProject/android/app/src/main/res/mipmap-xhdpi/ic_launcher.png"
+    },
+    {
+        "merged": "/Users/Chris/Projects/react-native-lets-rock-poc/android/app/build/intermediates/res/merged/debug/mipmap-xhdpi/ic_launcher.png",
+        "source": "/Users/Chris/Projects/react-native-lets-rock-poc/android/app/src/main/res/mipmap-xhdpi/ic_launcher.png"
+    }
+]
