@@ -13,9 +13,13 @@ import {
   Text,
   View,
   TouchableOpacity,
-  ListView
+  ListView,
+  AsyncStorage
 } from 'react-native';
 
+import { getData } from 'Network';
+
+const STORE_KEY = '@MyData:key';
 
 export default class ActiveScreen extends React.Component {
   static navigationOptions = {
@@ -36,25 +40,36 @@ export default class ActiveScreen extends React.Component {
   }
 
   componentDidMount(){
-    const requestURL = 'https://plgaia-staging.herokuapp.com/api/v1/post_get_active/4Wa0y74X1mAKKIo2qgiWii';
-  
-    return fetch(requestURL, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          authorization: 'Token ZVKgYbjoOxoM9fvuhDvQOAtt'
-        }
-      })
-      .then((response) => response.json())
-      .then((responseJson) => {
-        const results = responseJson['get_active'];
-        this.setState({
-          dataSource: this._ds.cloneWithRows(results)
-        });
-      })
-      .catch((error) =>{
-        console.error(error);
+    AsyncStorage.getItem(STORE_KEY, (err, result) => {
+      if (err) {
+        console.err(err);
+        this._getData();
+      }
+
+      if (!result) {
+        this._getData();
+      }
+      
+      console.log(result);
+      this.setState({
+        dataSource: this._ds.cloneWithRows(JSON.parse(result))
       });
+    });
+  }
+
+  _getData() {
+    getData().then((results) => {
+      AsyncStorage.setItem(STORE_KEY, JSON.stringify(results));
+      this.setState({
+        dataSource: this._ds.cloneWithRows(results)
+      });
+    }).catch((error) => {
+      console.err(error);
+      AsyncStorage.setItem(STORE_KEY, '[]');
+      this.setState({
+        dataSource: this._ds.cloneWithRows([])
+      });
+    })
   }
 
   _renderRow(rowData) {
