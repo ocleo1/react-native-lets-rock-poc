@@ -9,11 +9,15 @@ import { AppRegistry } from 'react-native';
 import { StackNavigator } from 'react-navigation';
 
 import LandingScreen from 'LandingScreen';
+import ActiveScreen from 'ActiveScreen';
 
 const RootStack = StackNavigator(
   {
     Landing: {
       screen: LandingScreen,
+    },
+    Active: {
+      screen: ActiveScreen
     }
   },
   {

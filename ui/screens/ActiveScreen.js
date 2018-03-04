@@ -21,8 +21,9 @@ export default class ActiveScreen extends React.Component {
   static navigationOptions = {
     title: 'Get Active',
     headerStyle: {
-      backgroundColor: '#F5FCFF'
+      backgroundColor: '#FFE4D3'
     },
+    headerBackTitle: null
   };
 
   constructor(props) {

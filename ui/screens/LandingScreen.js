@@ -42,7 +42,9 @@ export default class LandingScreen extends React.Component {
   }
 
   _onPressButton() {
-    // Navigation
+    if (this.props.navigation) {
+      this.props.navigation.navigate('Active');
+    }
   }
 
   render() {
