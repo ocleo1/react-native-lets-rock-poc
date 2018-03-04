@@ -81,8 +81,8 @@ export default class ActiveScreen extends React.Component {
       }}>
         <View style={{marginTop: 30, alignItems: 'center'}}>
           <Image
-            style={{width: 100, height: 100}}
-            source={{uri: `http:${rowData.image.url}`}}
+            style={{width: 150, height: 150}}
+            source={{uri: `https:${rowData.image.url}`}}
           />
         </View>
         <View style={{marginTop: 10, alignItems: 'center'}}>
