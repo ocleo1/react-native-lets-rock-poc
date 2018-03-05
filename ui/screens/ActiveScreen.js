@@ -45,10 +45,12 @@ export default class ActiveScreen extends React.Component {
       if (err) {
         console.err(err);
         this._getData();
+        return;
       }
 
       if (!result) {
         this._getData();
+        return;
       }
       
       console.log(result);
