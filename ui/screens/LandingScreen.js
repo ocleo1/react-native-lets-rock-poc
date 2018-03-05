@@ -58,7 +58,7 @@ export default class LandingScreen extends React.Component {
             source={require('../images/biking.png')}
           />
         </View>
-        <View style={{flex: .4, backgroundColor: '#c6f9ff'}}>
+        <View style={{flex: .4, backgroundColor: '#c6f9ff', borderTopLeftRadius: imageWidth / 3, borderTopRightRadius: imageWidth / 3}}>
           <View style={{flex: .9, alignItems: 'center', justifyContent: 'center'}}>
             <TouchableOpacity onPress={this._onPressButton.bind(this)}>
               <View style={styles.button}>
