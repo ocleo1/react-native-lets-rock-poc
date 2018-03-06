@@ -13,7 +13,8 @@ import {
   Text,
   View,
   TouchableOpacity,
-  ListView
+  ListView,
+  AsyncStorage
 } from 'react-native';
 import _ from 'lodash';
 
@@ -21,7 +22,7 @@ import AudioPlayer from 'AudioPlayer';
 import { getData } from 'Network';
 import { destroyDB, resetDB, allRecords } from 'Database';
 
-const STORE_KEY = '@MyData:key';
+const STORE_KEY = '@MyData:date';
 
 export default class ActiveScene extends React.Component {
   static navigationOptions = {
@@ -42,22 +43,38 @@ export default class ActiveScene extends React.Component {
   }
 
   componentDidMount(){
+    const date = new Date();
+    const dateString = `${date.getFullYear()}${date.getMonth()}${date.getDate()}`;
+
+    AsyncStorage.getItem(STORE_KEY, (err, result) => {
+      if (err || _.isEmpty(result) || dateString !== result) {
+        AsyncStorage.setItem(STORE_KEY, dateString, () => {
+          this._getDataFromServer();
+        });
+        return;
+      }
+
+      this._getDataFromDB();
+    });
+  }
+
+  _getDataFromDB() {
     allRecords().then((result) => {
       if (_.isEmpty(result)) {
-        this._getData();
+        this._getDataFromServer();
         return;
       }
 
       this.setState({
-        dataSource: this._ds.cloneWithRows(JSON.parse(result))
+        dataSource: this._ds.cloneWithRows(result)
       });
     }).catch((err) => {
       console.log(err);
-      this._getData();
-    })
+      this._getDataFromServer();
+    });
   }
 
-  _getData() {
+  _getDataFromServer() {
     getData().then((results) => {
       this.setState({
         dataSource: this._ds.cloneWithRows(results)
