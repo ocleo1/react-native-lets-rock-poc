@@ -13,12 +13,13 @@ import {
   Text,
   View,
   TouchableOpacity,
-  ListView,
-  AsyncStorage
+  ListView
 } from 'react-native';
+import _ from 'lodash';
 
 import AudioPlayer from 'AudioPlayer';
 import { getData } from 'Network';
+import { destroyDB, resetDB, allRecords } from 'Database';
 
 const STORE_KEY = '@MyData:key';
 
@@ -41,37 +42,35 @@ export default class ActiveScene extends React.Component {
   }
 
   componentDidMount(){
-    AsyncStorage.getItem(STORE_KEY, (err, result) => {
-      if (err) {
-        console.err(err);
+    allRecords().then((result) => {
+      if (_.isEmpty(result)) {
         this._getData();
         return;
       }
 
-      if (!result) {
-        this._getData();
-        return;
-      }
-      
-      console.log(result);
       this.setState({
         dataSource: this._ds.cloneWithRows(JSON.parse(result))
       });
-    });
+    }).catch((err) => {
+      console.log(err);
+      this._getData();
+    })
   }
 
   _getData() {
     getData().then((results) => {
-      AsyncStorage.setItem(STORE_KEY, JSON.stringify(results));
       this.setState({
         dataSource: this._ds.cloneWithRows(results)
       });
+      return resetDB(results);
+    }).then((result) => {
+      console.log(result);
     }).catch((error) => {
-      console.err(error);
-      AsyncStorage.setItem(STORE_KEY, '[]');
+      console.log(error);
       this.setState({
         dataSource: this._ds.cloneWithRows([])
       });
+      destroyDB();
     })
   }
 
