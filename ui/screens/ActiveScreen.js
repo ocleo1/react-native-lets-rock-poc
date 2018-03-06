@@ -2,7 +2,7 @@
  * Lets Rock
  * https://github.com/ocleo1
  * 
- * @providesModule ActiveScreen
+ * @providesModule ActiveScene
  * @flow
  */
 
@@ -22,7 +22,7 @@ import { getData } from 'Network';
 
 const STORE_KEY = '@MyData:key';
 
-export default class ActiveScreen extends React.Component {
+export default class ActiveScene extends React.Component {
   static navigationOptions = {
     title: 'Get Active',
     headerStyle: {

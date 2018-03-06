@@ -8,16 +8,16 @@ import React from 'react';
 import { AppRegistry } from 'react-native';
 import { StackNavigator } from 'react-navigation';
 
-import LandingScreen from 'LandingScreen';
-import ActiveScreen from 'ActiveScreen';
+import LandingScene from 'LandingScene';
+import ActiveScene from 'ActiveScene';
 
 const RootStack = StackNavigator(
   {
     Landing: {
-      screen: LandingScreen,
+      screen: LandingScene,
     },
     Active: {
-      screen: ActiveScreen
+      screen: ActiveScene
     }
   },
   {

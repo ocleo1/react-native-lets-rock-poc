@@ -2,7 +2,7 @@
  * Lets Rock
  * https://github.com/ocleo1
  * 
- * @providesModule LandingScreen
+ * @providesModule LandingScene
  * @flow
  */
 
@@ -18,7 +18,7 @@ import {
 
 const { Surface, Shape, Path } = ART;
 
-export default class LandingScreen extends React.Component {
+export default class LandingScene extends React.Component {
   static navigationOptions = {
     header: null
   };
