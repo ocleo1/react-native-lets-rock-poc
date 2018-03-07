@@ -12,15 +12,15 @@ import {
   Image,
   Text,
   View,
-  TouchableOpacity,
   ListView,
   AsyncStorage
 } from 'react-native';
+
 import _ from 'lodash';
 
 import AudioPlayer from 'AudioPlayer';
 import { getData } from 'Network';
-import { destroyDB, resetDB, allRecords } from 'Database';
+import { destroyDB, resetDB, allRecords } from 'DBUtils';
 
 const STORE_KEY = '@MyData:date';
 
@@ -43,10 +43,10 @@ export default class ActiveScene extends React.Component {
   }
 
   componentDidMount(){
-    const date = new Date();
-    const dateString = `${date.getFullYear()}${date.getMonth()}${date.getDate()}`;
-
     AsyncStorage.getItem(STORE_KEY, (err, result) => {
+      const date = new Date();
+      const dateString = `${date.getFullYear()}${date.getMonth()}${date.getDate()}`;
+
       if (err || _.isEmpty(result) || dateString !== result) {
         AsyncStorage.setItem(STORE_KEY, dateString, () => {
           this._getDataFromServer();
@@ -79,9 +79,7 @@ export default class ActiveScene extends React.Component {
       this.setState({
         dataSource: this._ds.cloneWithRows(results)
       });
-      return resetDB(results);
-    }).then((result) => {
-      console.log(result);
+      resetDB(results);
     }).catch((error) => {
       console.log(error);
       this.setState({
@@ -92,6 +90,10 @@ export default class ActiveScene extends React.Component {
   }
 
   _renderRow(rowData) {
+    if (_.isEmpty(rowData)) {
+      return null;
+    }
+
     return (
       <View style={{
         justifyContent: 'center',
