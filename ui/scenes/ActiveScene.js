@@ -20,7 +20,7 @@ import _ from 'lodash';
 
 import AudioPlayer from 'AudioPlayer';
 import { getData } from 'Network';
-import { destroyDB, resetDB, allRecords } from 'DBUtils';
+import { resetDB, allRecords } from 'DBUtils';
 
 const STORE_KEY = '@MyData:date';
 
@@ -85,7 +85,6 @@ export default class ActiveScene extends React.Component {
       this.setState({
         dataSource: this._ds.cloneWithRows([])
       });
-      destroyDB();
     })
   }
 

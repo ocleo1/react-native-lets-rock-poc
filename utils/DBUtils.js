@@ -14,14 +14,6 @@ const DB_NAME = 'mydb';
 var db = new PouchDB(DB_NAME, {adapter: 'asyncstorage'});
 // console.log(db.adapter);
 
-export function destroyDB() {
-  db.destroy(DB_NAME).then((response) => {
-    console.log(response);
-  }).catch(function (err) {
-    console.log(err);
-  });
-}
-
 export function resetDB(data) {
   db.destroy(DB_NAME).then((response) => {
     let docs = _.cloneDeep(data);
