@@ -7,7 +7,7 @@
  */
 
 import React from 'react';
-import { View, WebView } from 'react-native';
+import { View, WebView, Platform } from 'react-native';
 
 
 export default class AudioPlayer extends React.Component {
@@ -16,10 +16,12 @@ export default class AudioPlayer extends React.Component {
   }
 
   render() {
+    const uri = Platform.OS === 'ios' ? 'song.html' : 'file:///android_asset/song.html';
+
     return (
       <WebView
         ref={( webView ) => this.webView = webView}
-        source={require('./audio.html')}
+        source={{uri: uri}}
         mediaPlaybackRequiresUserAction={false}
       />
     );

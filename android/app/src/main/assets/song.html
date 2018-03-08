@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Ain't No Mountain High Enough</title>
+  <style>
+    html {
+      font-family: "Arial","Microsoft YaHei",sans-serif;
+    }
+    #count-down {
+      padding-left: 3px;
+      width: 45px;
+      height: 20px;
+      border-radius: 5px;
+      -moz-box-shadow:    3px 3px 5px 6px #ccc;
+      -webkit-box-shadow: 3px 3px 5px 6px #ccc;
+      box-shadow:         3px 3px 5px 6px #ccc;
+    }
+  </style>
+</head>
+<body>
+  <div id="count-down">00:00</div>
+  <audio id="audio-play" autoplay>
+    Your browser does not support the <code>audio</code> element.
+    <source src="https://audio-ssl.itunes.apple.com/apple-assets-us-std-000001/Music3/v4/79/99/ea/7999ea74-883d-8734-c239-772db98709ae/mzaf_1504638199314900439.plus.aac.p.m4a" type="audio/mp4" />
+  </audio>
+  <script>
+    var audioElement = document.getElementById('audio-play');
+    var countDownElement = document.getElementById('count-down');
+    var timerId, second = 1;
+
+    audioElement.addEventListener("canplaythrough", function() {
+      timerId = window.setInterval(function() {
+        if (second < 10) {
+          countDownElement.textContent = '00:0' + second;
+        } else {
+          countDownElement.textContent = '00:' + second;
+        }
+        second = second + 1;
+      }, 1000);
+    });
+    audioElement.addEventListener("ended", function(event) {
+      window.clearInterval(timerId);
+      countDownElement.textContent = '00:00';
+    });
+    document.addEventListener("stop", function(event) {
+      audioElement.pause();
+      window.clearInterval(timerId);
+    });
+  </script>
+</body>
+</html>

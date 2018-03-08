@@ -24,7 +24,8 @@ export default class LoadingMask extends React.Component {
       <Modal
         animationType={'slide'}
         transparent={true}
-        visible={this.props.modalVisible}>
+        visible={this.props.modalVisible}
+        onRequestClose={() => {}}>
         <View style={styles.container}>
           <Text style={{textAlign: 'center', fontSize: 24, color: "white"}}>Loading...</Text>
         </View>
