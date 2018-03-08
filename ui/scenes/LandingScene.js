@@ -49,7 +49,7 @@ export default class LandingScene extends React.Component {
       }}>
         <Image
           style={{width: width, height: imageHeight}}
-          source={require('../images/biking.png')}
+          source={{uri: 'biking'}}
         />
       </View>
     );
