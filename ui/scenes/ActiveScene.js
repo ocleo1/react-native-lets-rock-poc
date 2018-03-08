@@ -18,7 +18,6 @@ import {
 
 import _ from 'lodash';
 
-import LoadingMask from 'LoadingMask';
 import AudioPlayer from 'AudioPlayer';
 import { getData } from 'Network';
 import { resetDB, allRecords } from 'DBUtils';
@@ -39,7 +38,6 @@ export default class ActiveScene extends React.Component {
 
     this._ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     this.state = {
-      showLoadingMask: true,
       dataSource: this._ds.cloneWithRows([])
     }
   }
@@ -68,7 +66,6 @@ export default class ActiveScene extends React.Component {
       }
 
       this.setState({
-        showLoadingMask: false,
         dataSource: this._ds.cloneWithRows(result)
       });
     }).catch((err) => {
@@ -80,14 +77,12 @@ export default class ActiveScene extends React.Component {
   _getDataFromServer() {
     getData().then((results) => {
       this.setState({
-        showLoadingMask: false,
         dataSource: this._ds.cloneWithRows(results)
       });
       resetDB(results);
     }).catch((error) => {
       console.log(error);
       this.setState({
-        showLoadingMask: false,
         dataSource: this._ds.cloneWithRows([])
       });
     })
@@ -159,7 +154,6 @@ export default class ActiveScene extends React.Component {
         <View style={styles.audioPlayer}>
           <AudioPlayer />
         </View>
-        <LoadingMask modalVisible={this.state.showLoadingMask} />
       </View>
     );
   }
